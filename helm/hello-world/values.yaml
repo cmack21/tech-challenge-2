@@ -1,0 +1,11 @@
+replicaCount: 2
+
+image:
+  repository: 691652240094.dkr.ecr.us-east-2.amazonaws.com/hello-world-app
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 3000
