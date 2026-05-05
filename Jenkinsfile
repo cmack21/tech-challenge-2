@@ -27,7 +27,7 @@ pipeline {
     stage('Push to ECR') {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
-                          credentialsId: 'aws-credentials']]) {
+                          credentialsId: 'Admin-IAM']]) {
           sh """
             aws ecr get-login-password --region ${AWS_REGION} | \
               docker login --username AWS --password-stdin ${ECR_REGISTRY}
@@ -40,7 +40,7 @@ pipeline {
     stage('Deploy to EKS') {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
-                          credentialsId: 'aws-credentials']]) {
+                          credentialsId: 'Admin-IAM']]) {
           sh """
             aws eks update-kubeconfig --region ${AWS_REGION} --name ${CLUSTER_NAME}
             kubectl set image deployment/hello-world hello-world=${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
